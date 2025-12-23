@@ -1,4 +1,3 @@
-
 public class PrintNumber_DoWhile {
 
     public static void printLoop1(int n1, int n2) {

@@ -1,3 +1,4 @@
+package day6.while_loop;
 public class PrintCharactersInRange {
 
     public static void printLoop(char n1, char n2) {

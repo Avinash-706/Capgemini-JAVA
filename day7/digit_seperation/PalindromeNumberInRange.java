@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class PalindromeNumberInRange {
 
     public static boolean palindromeCheck(int n){
@@ -16,9 +14,9 @@ public class PalindromeNumberInRange {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Palindrome Numbers in range 100 to 200 : ");
+
         for(int i = 1 ; i <= 100 ; i++){
             if(palindromeCheck(i))  System.out.println(i + "  :  is a Palindrome Number") ;
         }

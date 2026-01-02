@@ -290,10 +290,59 @@ JAVA BLOCKS & CONSTRUCTORS
  -----------------------------
  9. THIS CALLING STATEMENT
   -----------------------------
-  it is a constructor calling statement. 
-  it is use to call constructor of same class 
-  if we have n number of constructor they we can use -1 this() calling statements.
-  if ant constructor wll have this( calling ststamente then that constructor does not have pli and iib. //give a very short code to explain this
-
-  note : constructor recursion is not possible because it will not create an object
-  if we try to acheive constructor recursion so it will  give compile time error.
+   DEFINITION:
+    -> `this()` is a constructor calling statement used to invoke another
+       constructor within the SAME class.
+    -> It is used for "Constructor Chaining" (reusing logic from other constructors).
+   
+   RULES:
+    -> ✅ MUST be the first statement in the constructor.
+    -> ✅ We can use at most `n-1` `this()` statements for `n` constructors
+       (at least one constructor must handle the actual initialization via `super()`).
+    -> ❌ NO PLI/IIB: If a constructor contains `this()`, it delegates the
+       initialization. Therefore, it does NOT execute PLI or IIB directly
+       (the called constructor will eventually trigger them).
+   
+   CODE EXAMPLE:
+    class Test {
+        Test() {
+            this(10); // Calls parameterized constructor
+            System.out.println("No-Arg Const");
+        }
+        
+        Test(int a) {
+            System.out.println("Param Const: " + a);
+        }
+        // Flow: new Test() -> calls Test(10) -> prints "Param..." -> prints "No-Arg..."
+    }
+ 
+ 
+ -----------------------------
+ 10. WHY CONSTRUCTOR RECURSION IS NOT POSSIBLE
+  -----------------------------
+   THE PROBLEM:
+    -> Constructor recursion occurs if Constructor A calls Constructor B, and
+       Constructor B calls Constructor A (or A calls A directly).
+   
+   WHY IT IS BLOCKED:
+    1. COMPILE TIME ERROR:
+       -> The compiler detects the cycle (Circular Dependency) and throws:
+          `Recursive constructor invocation`.
+       
+    2. EXECUTION LOGIC:
+       -> `this()` must be the first line. If recursion were allowed, the calls
+          would loop infinitely without ever reaching the `super()` call or the
+          rest of the body.
+       -> This would cause a `StackOverflowError` immediately, and the object
+          would NEVER be created or returned.
+    
+   EXAMPLE OF INVALID CODE:
+    class RecursionCheck {
+        RecursionCheck() {
+            this(10); // Calls int-arg constructor
+        }
+        
+        RecursionCheck(int i) {
+            this();   // ❌ ERROR: Calls no-arg constructor (Loop detected)
+        }
+    }
